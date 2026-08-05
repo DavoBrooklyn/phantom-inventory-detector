@@ -1,0 +1,13 @@
+branch_id,branch_name,region,snapshots,issue_count,reconciliation_issue_rate,absolute_stock_difference,phantom_incidents,estimated_lost_revenue,estimated_lost_gross_profit,risk_rank
+6,UrbanMart Branch 06,North,5400,14,0.26,168,6,1826.21,696.16,1
+9,UrbanMart Branch 09,Central,5400,12,0.22,199,3,1684.06,601.45,2
+10,UrbanMart Branch 10,North,5400,13,0.24,250,4,1011.28,377.71,3
+5,UrbanMart Branch 05,Central,5400,10,0.19,130,3,921.68,302.65,4
+1,UrbanMart Branch 01,Central,5400,13,0.24,205,1,850.21,306.49,5
+4,UrbanMart Branch 04,East,5400,15,0.28,255,7,742.19,291.47,6
+2,UrbanMart Branch 02,North,5400,18,0.33,234,5,678.67,254.09,7
+11,UrbanMart Branch 11,South,5400,13,0.24,229,6,641.63,256.32,8
+7,UrbanMart Branch 07,South,5400,8,0.15,141,2,524.75,203.55,9
+12,UrbanMart Branch 12,East,5400,18,0.33,316,6,422.99,159.83,10
+3,UrbanMart Branch 03,South,5400,11,0.2,187,0,383.03,147.25,11
+8,UrbanMart Branch 08,East,5400,12,0.22,207,2,294.83,111.86,12

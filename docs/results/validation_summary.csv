@@ -1,0 +1,5 @@
+issue_type,expected_issues,detected_issues,detection_rate
+Duplicate inventory movement,35,35,100.0
+Missing delivery movement,35,35,100.0
+Phantom inventory,45,45,100.0
+Possible shrinkage or missing outflow,45,45,100.0

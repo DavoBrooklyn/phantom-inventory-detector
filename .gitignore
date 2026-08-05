@@ -1,0 +1,11 @@
+.venv/
+__pycache__/
+*.pyc
+database/*.db
+data/raw/*.csv
+data/validation/*.csv
+outputs/*.csv
+outputs/*.html
+outputs/charts/*.png
+.DS_Store
+Thumbs.db
