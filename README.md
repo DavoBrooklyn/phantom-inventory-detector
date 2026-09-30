@@ -1,94 +1,59 @@
 # Phantom Inventory & Lost Sales Detector
 
-An end-to-end SQLite and Python project that reconciles inventory movements against daily stock snapshots, detects phantom inventory, groups stockout periods, evaluates suppliers, and estimates lost revenue.
+An end-to-end inventory analytics project built with SQLite, SQL, Python and Streamlit. It reconciles stock movements against daily snapshots, detects phantom inventory, identifies operational root causes, estimates lost sales, evaluates suppliers and ranks branch inventory risk.
 
 ## Business Problem
 
-A retailer's system can show stock as available while the product is physically unavailable. This creates cancelled orders, inaccurate reports, emergency stock corrections, and lost sales.
+Inventory systems can report stock as available even when customers cannot actually buy the product. That creates cancellations, inaccurate replenishment decisions, emergency corrections and lost revenue.
 
-The project answers:
+The project answers which balances fail to reconcile, where phantom inventory appears, which branches and categories create the most risk, and which suppliers contribute to availability problems.
 
-1. Which branch-product-day stock balances do not reconcile?
-2. Where does recorded inventory exist but customers cannot buy the product?
-3. How much revenue and gross profit may have been lost?
-4. Which branches and suppliers create the most inventory risk?
+## Analytical Pipeline
+
+Synthetic operational data → SQLite relational model → SQL reconciliation and diagnostic views → Python validation and reporting → interactive Streamlit dashboard → operational decisions.
 
 ## Stack
 
-- SQLite
-- Python
-- pandas
-- NumPy
-- Matplotlib
+SQLite, SQL, Python, pandas, NumPy, Plotly, Streamlit and Matplotlib.
 
-## Fictional Dataset
+## Dataset
 
-- 12 branches
-- 60 products
-- 6 suppliers
-- 90 days
-- 64,800 daily inventory snapshots
-- Sales, deliveries, waste, corrections, and cancellations
-- 160 deliberately inserted problems
+The reproducible synthetic dataset contains 12 branches, 60 products, 6 suppliers, 90 days of inventory history and 64,800 daily inventory snapshots. It includes sales, deliveries, waste, corrections and cancellations, plus deliberately inserted inventory problems for validation.
 
-No real business data is included.
+## SQL Techniques
 
-## Main SQL Work
+The SQL layer uses conditional aggregation, CTEs, LAG(), ROW_NUMBER(), RANK(), gaps-and-islands logic, correlated subqueries and multi-table reconciliation.
 
-- Conditional aggregation for daily stock movements
-- `LAG()` for previous closing stock
-- `ROW_NUMBER()` for duplicate detection
-- Gaps-and-islands analysis for consecutive stockouts
-- Correlated subqueries for same-weekday demand estimates
-- Supplier fill-rate and on-time-delivery calculations
-- Branch risk ranking with `RANK()`
+Core views: vw_inventory_reconciliation, vw_reconciliation_issues, vw_duplicate_movements, vw_phantom_inventory, vw_stockout_periods, vw_lost_sales_estimate, vw_supplier_performance and vw_branch_inventory_health.
 
-## Inventory Equation
+## Dashboard
 
-```text
-Expected closing stock
-=
-Previous recorded closing stock
-+ inflows
-- outflows
-```
+The Streamlit dashboard contains Executive Overview, Root Causes, Suppliers and Investigation views. It exposes inventory issues, phantom cases, estimated lost revenue, validation performance, branch risk, root causes, supplier metrics and detailed investigation records.
+
+## Inventory Logic
+
+Expected closing stock = previous recorded closing stock + inflows - outflows.
+
+A difference between expected and recorded stock becomes an investigation candidate. Additional rules distinguish likely duplicate movements, missing outflows, phantom inventory and other operational issues.
+
+## Lost Sales
+
+Lost sales are estimated from recent matching weekdays rather than treated as known revenue. The result is a prioritization metric, not a claim of measured real-world financial impact.
 
 ## Run
 
-On Windows, double-click:
-
-```text
-run_project.bat
-```
+On Windows, double-click start_dashboard.bat.
 
 Or run:
 
-```bash
 python -m venv .venv
 .venv\Scripts\activate
 pip install -r requirements.txt
 python run_all.py
-```
+streamlit run dashboard/app.py
 
-## Main Views
+The dashboard automatically builds the project outputs if they are missing.
 
-- `vw_inventory_reconciliation`
-- `vw_reconciliation_issues`
-- `vw_duplicate_movements`
-- `vw_phantom_inventory`
-- `vw_stockout_periods`
-- `vw_lost_sales_estimate`
-- `vw_supplier_performance`
-- `vw_branch_inventory_health`
+## Business Use
 
-## Limitations
-
-Lost sales are estimated using the previous four matching weekdays. The classifications are rule-based and should support manual investigation rather than replace it.
-
-## AI Assistance
-
-AI tools assisted with code generation and documentation. The business requirements, analytical logic, validation, testing, and interpretation were directed and reviewed by the project owner.
-
-## License
-
-MIT
+The analysis supports cycle-count prioritization, branch investigation, supplier review, stockout reduction and inventory-control decisions. The dataset is synthetic and reproducible.
